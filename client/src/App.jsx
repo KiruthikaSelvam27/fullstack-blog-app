@@ -5,6 +5,12 @@ import PostList from './components/PostListContainer';
 function App() {
   return (
     <div className="app">
+      <div className="app__bg" aria-hidden="true">
+        <div className="app__orb app__orb--1" />
+        <div className="app__orb app__orb--2" />
+        <div className="app__orb app__orb--3" />
+      </div>
+
       <Header />
       <main className="main">
         <aside className="sidebar">

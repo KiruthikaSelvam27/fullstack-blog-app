@@ -7,12 +7,15 @@ const initialForm = { title: '', content: '' };
 function AddPostForm() {
   const [form, setForm] = useState(initialForm);
   const [clientError, setClientError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const [createPost, { loading, error }] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
     onCompleted: () => {
       setForm(initialForm);
       setClientError('');
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
     },
   });
 
@@ -20,6 +23,7 @@ function AddPostForm() {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
     setClientError('');
+    setSuccess(false);
   };
 
   const handleSubmit = async (event) => {
@@ -45,33 +49,48 @@ function AddPostForm() {
 
   return (
     <div className="card form-card">
-      <h2 className="card__title">Write a new post</h2>
-      <p className="card__description">
-        Add a title and content to publish your blog post.
-      </p>
+      <div className="form-card__header">
+        <div className="form-card__icon" aria-hidden="true">✏️</div>
+        <div>
+          <h2 className="card__title">Create Post</h2>
+          <p className="card__description">Share your story with the world</p>
+        </div>
+      </div>
+
+      {success && (
+        <div className="form__success" role="status">
+          Post published successfully!
+        </div>
+      )}
 
       <form className="form" onSubmit={handleSubmit}>
         <label className="form__field">
-          <span>Title</span>
+          <span className="form__label">
+            Title
+            <span className="form__hint">{form.title.length}/200</span>
+          </span>
           <input
             type="text"
             name="title"
             value={form.title}
             onChange={handleChange}
-            placeholder="Enter post title"
+            placeholder="Give your post a catchy title..."
             maxLength={200}
             disabled={loading}
           />
         </label>
 
         <label className="form__field">
-          <span>Content</span>
+          <span className="form__label">
+            Content
+            <span className="form__hint">{form.content.length} chars</span>
+          </span>
           <textarea
             name="content"
             value={form.content}
             onChange={handleChange}
-            placeholder="Write your post content..."
-            rows={8}
+            placeholder="Write something amazing..."
+            rows={7}
             disabled={loading}
           />
         </label>
@@ -82,8 +101,15 @@ function AddPostForm() {
           </p>
         )}
 
-        <button className="button" type="submit" disabled={loading}>
-          {loading ? 'Publishing...' : 'Publish Post'}
+        <button className="button button--primary" type="submit" disabled={loading}>
+          {loading ? (
+            <>
+              <span className="button__spinner" aria-hidden="true" />
+              Publishing...
+            </>
+          ) : (
+            'Publish Post'
+          )}
         </button>
       </form>
     </div>
