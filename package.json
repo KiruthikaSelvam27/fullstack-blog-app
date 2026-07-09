@@ -1,6 +1,7 @@
 {
   "name": "blog-app",
   "private": true,
+  "type": "module",
   "version": "1.0.0",
   "description": "Full-stack blog app with React, GraphQL, and MongoDB",
   "scripts": {

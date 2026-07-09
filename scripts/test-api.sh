@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 API_URL="${API_URL:-http://localhost:4000/graphql}"
 
 echo "==> Testing health endpoint"
@@ -16,12 +15,13 @@ CREATE_RESPONSE=$(curl -sf -X POST "$API_URL" \
 echo "$CREATE_RESPONSE" | grep -q '"title":"E2E Test Post"'
 echo "Create mutation passed"
 
-echo "==> Fetching posts"
+echo "==> Fetching posts (paginated)"
 QUERY_RESPONSE=$(curl -sf -X POST "$API_URL" \
   -H "Content-Type: application/json" \
-  -d '{"query":"{ posts { id title content } }"}')
+  -d '{"query":"{ posts(limit: 10, offset: 0) { items { id title content } totalCount hasMore } }"}')
 
 echo "$QUERY_RESPONSE" | grep -q '"E2E Test Post"'
+echo "$QUERY_RESPONSE" | grep -q '"totalCount"'
 echo "Posts query passed"
 
 echo ""

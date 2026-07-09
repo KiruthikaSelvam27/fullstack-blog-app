@@ -6,8 +6,14 @@ const typeDefs = `#graphql
     createdAt: String!
   }
 
+  type PostsResult {
+    items: [Post!]!
+    totalCount: Int!
+    hasMore: Boolean!
+  }
+
   type Query {
-    posts: [Post!]!
+    posts(limit: Int = 20, offset: Int = 0): PostsResult!
   }
 
   type Mutation {

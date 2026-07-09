@@ -13,8 +13,8 @@ A full-stack blog application built with **React**, **Node.js**, **GraphQL**, an
 | Service | URL | Description |
 |---------|-----|-------------|
 | **Frontend (React)** | http://localhost:5173 | Blog homepage — view & add posts |
-| **GraphQL API** | http://localhost:4000/graphql | Apollo Server GraphQL endpoint |
-| **GraphQL Playground** | http://localhost:4000/graphql | Test queries & mutations in browser |
+| **GraphQL API** | http://localhost:4000/graphql | Apollo Server GraphQL endpoint (POST) |
+| **Apollo Sandbox** | https://studio.apollographql.com/sandbox/explorer | Test queries in browser (point to local URL) |
 | **Health Check** | http://localhost:4000/health | API status check |
 | **MongoDB (local)** | `mongodb://127.0.0.1:27017/blog-app` | Local database connection |
 | **MongoDB (Docker)** | `mongodb://127.0.0.1:27017/blog-app` | Same URI when using docker-compose |
@@ -254,7 +254,7 @@ Go to **http://localhost:5173** in your browser.
 | Endpoint | `http://localhost:4000/graphql` |
 | Method | POST |
 | Content-Type | `application/json` |
-| Playground | Open `http://localhost:4000/graphql` in browser |
+| Testing | Use [Apollo Sandbox](https://studio.apollographql.com/sandbox/explorer) with `http://localhost:4000/graphql` |
 
 ### Server Ports
 
@@ -268,15 +268,19 @@ Go to **http://localhost:5173** in your browser.
 
 ## GraphQL API Reference
 
-### Query — Get all posts
+### Query — Get posts (paginated)
 
 ```graphql
 query GetPosts {
-  posts {
-    id
-    title
-    content
-    createdAt
+  posts(limit: 20, offset: 0) {
+    items {
+      id
+      title
+      content
+      createdAt
+    }
+    totalCount
+    hasMore
   }
 }
 ```
@@ -304,7 +308,7 @@ mutation CreatePost {
 ```bash
 curl -X POST http://localhost:4000/graphql \
   -H "Content-Type: application/json" \
-  -d '{"query":"{ posts { id title content createdAt } }"}'
+  -d '{"query":"{ posts(limit: 20, offset: 0) { items { id title content createdAt } totalCount hasMore } }"}'
 ```
 
 **Create a post:**
@@ -386,7 +390,7 @@ Expected response: `{"status":"ok"}`
 4. Fill in **Title** and **Content**, click **Publish Post**
 5. The new post should appear in the list immediately
 6. Refresh the page — the post should still be there (persisted in MongoDB)
-7. Test GraphQL directly at http://localhost:4000/graphql
+7. Test the API with [Apollo Sandbox](https://studio.apollographql.com/sandbox/explorer) pointing to `http://localhost:4000/graphql`
 
 ### Validation Rules
 

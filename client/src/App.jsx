@@ -1,8 +1,17 @@
+import { useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import Header from './components/Header';
 import AddPostForm from './components/AddPostForm';
-import PostList from './components/PostListContainer';
+import PostListContainer from './components/PostListContainer';
+import ErrorFallback from './components/ErrorFallback';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePostCreated = () => {
+    setCurrentPage(1);
+  };
+
   return (
     <div className="app">
       <div className="app__bg" aria-hidden="true">
@@ -14,10 +23,15 @@ function App() {
       <Header />
       <main className="main">
         <aside className="sidebar">
-          <AddPostForm />
+          <AddPostForm onPostCreated={handlePostCreated} />
         </aside>
         <section className="content">
-          <PostList />
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <PostListContainer
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          </ErrorBoundary>
         </section>
       </main>
     </div>

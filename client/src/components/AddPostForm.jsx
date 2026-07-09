@@ -1,56 +1,42 @@
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { CREATE_POST, GET_POSTS } from '../graphql/operations';
+import { POST_RULES, validatePostInput } from '../utils/validation';
+import useCreatePost from '../hooks/useCreatePost';
 
-const initialForm = { title: '', content: '' };
-
-function AddPostForm() {
-  const [form, setForm] = useState(initialForm);
-  const [clientError, setClientError] = useState('');
-  const [success, setSuccess] = useState(false);
-
-  const [createPost, { loading, error }] = useMutation(CREATE_POST, {
-    refetchQueries: [{ query: GET_POSTS }],
-    onCompleted: () => {
-      setForm(initialForm);
-      setClientError('');
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
-    },
-  });
+function AddPostForm({ onPostCreated }) {
+  const {
+    form,
+    clientError,
+    setClientError,
+    success,
+    loading,
+    serverError,
+    updateField,
+    submitPost,
+  } = useCreatePost({ onPostCreated });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-    setClientError('');
-    setSuccess(false);
+    updateField(name, value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const title = form.title.trim();
-    const content = form.content.trim();
+    const result = validatePostInput(form);
 
-    if (title.length < 3) {
-      setClientError('Title must be at least 3 characters.');
+    if (!result.isValid) {
+      setClientError(result.errors[0].message);
       return;
     }
 
-    if (content.length < 10) {
-      setClientError('Content must be at least 10 characters.');
-      return;
-    }
-
-    await createPost({ variables: { title, content } });
+    await submitPost(result);
   };
-
-  const serverError = error?.graphQLErrors?.[0]?.message || error?.message;
 
   return (
     <div className="card form-card">
       <div className="form-card__header">
-        <div className="form-card__icon" aria-hidden="true">✏️</div>
+        <div className="form-card__icon" aria-hidden="true">
+          ✏️
+        </div>
         <div>
           <h2 className="card__title">Create Post</h2>
           <p className="card__description">Share your story with the world</p>
@@ -67,7 +53,9 @@ function AddPostForm() {
         <label className="form__field">
           <span className="form__label">
             Title
-            <span className="form__hint">{form.title.length}/200</span>
+            <span className="form__hint">
+              {form.title.length}/{POST_RULES.title.max}
+            </span>
           </span>
           <input
             type="text"
@@ -75,7 +63,7 @@ function AddPostForm() {
             value={form.title}
             onChange={handleChange}
             placeholder="Give your post a catchy title..."
-            maxLength={200}
+            maxLength={POST_RULES.title.max}
             disabled={loading}
           />
         </label>
