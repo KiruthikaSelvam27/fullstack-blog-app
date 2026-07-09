@@ -1,6 +1,6 @@
 # Blog App
 
-A full-stack blog application built with **React**, **Node.js**, **GraphQL**, and **MongoDB**. Users can view all blog posts on the homepage and publish new posts through a responsive form.
+A full-stack blog application built with **React**, **Node.js**, **GraphQL**, and **MongoDB**.
 
 ## Repository
 
@@ -91,7 +91,7 @@ The React frontend uses Apollo Client to communicate with the GraphQL API. Durin
 
 ```bash
 git clone https://github.com/KiruthikaSelvam27/fullstack-blog-app
-cd blog-app
+cd fullstack-blog-app
 ```
 
 ### Step 2: Install dependencies
