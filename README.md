@@ -424,9 +424,6 @@ cd blog-app
 ---
 
 ## Deployment (Optional)
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for cloud deployment with MongoDB Atlas, Render, and Vercel.
-
 ---
 
 ## License
