@@ -4,9 +4,9 @@ A full-stack blog application built with **React**, **Node.js**, **GraphQL**, an
 
 ## Live Demo
 
-> Add your deployed URLs here after deployment:
+> Deploy using [DEPLOYMENT.md](./DEPLOYMENT.md), then update these links:
 > - Frontend: `https://your-app.vercel.app`
-> - API: `https://your-api.onrender.com/graphql`
+> - API: `https://blog-app-api.onrender.com/graphql`
 
 ## Features
 
@@ -136,36 +136,14 @@ mutation {
 | `npm run dev:client` | Start React dev server |
 | `npm run build` | Build frontend for production |
 
-## Deployment Guide
+## Deployment
 
-### 1. MongoDB Atlas (Database)
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the full step-by-step guide (Atlas → Render → Vercel).
 
-1. Create a free M0 cluster on [MongoDB Atlas](https://www.mongodb.com/atlas)
-2. Create a database user and allow network access (`0.0.0.0/0` for cloud deploys)
-3. Copy the connection string → use as `MONGODB_URI`
-
-### 2. Render (Backend API)
-
-1. Push this repo to GitHub
-2. Go to [Render](https://render.com) → **New** → **Blueprint**
-3. Connect your GitHub repo (uses `render.yaml`)
-4. Set environment variables:
-   - `MONGODB_URI` = your Atlas connection string
-   - `CLIENT_URL` = your Vercel frontend URL (set after step 3)
-5. Deploy and note your API URL: `https://blog-app-api.onrender.com/graphql`
-
-### 3. Vercel (Frontend)
-
-1. Go to [Vercel](https://vercel.com) → **Add New Project**
-2. Import the GitHub repo
-3. Set **Root Directory** to `client`
-4. Add environment variable:
-   - `VITE_GRAPHQL_URL` = `https://your-api.onrender.com/graphql`
-5. Deploy
-
-### 4. Finalize CORS
-
-After Vercel deploy, update Render's `CLIENT_URL` to your Vercel URL and redeploy the API.
+Quick links:
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
+- [Render Blueprint](https://dashboard.render.com/) — import `mahakumar197/blog-app`
+- [Vercel Import](https://vercel.com/new) — root directory: `client`
 
 ## GitHub Setup
 
