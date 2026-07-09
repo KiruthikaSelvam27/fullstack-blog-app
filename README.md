@@ -4,7 +4,7 @@ A full-stack blog application built with **React**, **Node.js**, **GraphQL**, an
 
 ## Repository
 
-**GitHub:** https://github.com/mahakumar197/blog-app
+**GitHub:** https://github.com/KiruthikaSelvam27/fullstack-blog-app
 
 ---
 
@@ -90,7 +90,7 @@ The React frontend uses Apollo Client to communicate with the GraphQL API. Durin
 ### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/mahakumar197/blog-app.git
+git clone https://github.com/KiruthikaSelvam27/fullstack-blog-app
 cd blog-app
 ```
 
@@ -415,11 +415,11 @@ Expected response: `{"status":"ok"}`
 ## GitHub Repository
 
 ```bash
-git clone https://github.com/mahakumar197/blog-app.git
+git clone https://github.com/KiruthikaSelvam27/fullstack-blog-app.git
 cd blog-app
 ```
 
-**Remote:** `https://github.com/mahakumar197/blog-app.git`
+**Remote:** `https://github.com/KiruthikaSelvam27/fullstack-blog-app.git`
 
 ---
 
