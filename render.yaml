@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: blog-app-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        sync: false
