@@ -175,7 +175,7 @@ git init
 git add .
 git commit -m "feat: full-stack blog app with React, GraphQL, and MongoDB"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/blog-app.git
+git remote add origin https://github.com/mahakumar197/blog-app.git
 git push -u origin main
 ```
 
